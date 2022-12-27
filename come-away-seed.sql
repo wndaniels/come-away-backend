@@ -3,7 +3,7 @@ VALUES  ('testuser',
         'testpassword', 
         'Test', 
         'User', 
-        'testuser@comeawayapp.com')
+        'testuser@comeawayapp.com');
 
 INSERT INTO days (day)
 VALUES  ('1'),
@@ -36,7 +36,7 @@ VALUES  ('1'),
         ('28'),
         ('29'),
         ('30'),
-        ('31')
+        ('31');
 
 INSERT INTO days_of_week (day_of_week)
 VALUES  ('Sunday'),
@@ -45,7 +45,7 @@ VALUES  ('Sunday'),
         ('Wednesday'),
         ('Thursday'),
         ('Friday'),
-        ('Saturday')
+        ('Saturday');
 
 INSERT INTO months (month)
 VALUES  ('January'),
@@ -59,7 +59,7 @@ VALUES  ('January'),
         ('September'),
         ('October'),
         ('November'),
-        ('December')
+        ('December');
 
 INSERT INTO years (year)
 VALUES  ('2023'),
@@ -89,4 +89,4 @@ VALUES  ('2023'),
         ('2047'),
         ('2048'),
         ('2049'),
-        ('2050')
+        ('2050');
