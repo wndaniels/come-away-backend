@@ -1,11 +1,13 @@
 ﻿CREATE TABLE begin_hours (
     id SERIAL PRIMARY KEY,
-    business_begins_hour TEXT NOT NULL
+    business_begins_hour TEXT NOT NULL,
+    hour_title TEXT NOT NULL
 );
 
 CREATE TABLE end_hours (
     id SERIAL PRIMARY KEY,
-    business_ends_hour TEXT NOT NULL
+    business_ends_hour TEXT NOT NULL,
+    hour_title TEXT NOT NULL
 );
 
 CREATE TABLE days (
@@ -45,7 +47,7 @@ CREATE TABLE cal_views (
 
 CREATE TABLE calendars (
     id SERIAL PRIMARY KEY,
-    cal_view_id INTEGER
+    view_type_id INTEGER
         REFERENCES cal_views ON DELETE CASCADE,
     business_begins_hour_id INTEGER
         REFERENCES begin_hours ON DELETE CASCADE,

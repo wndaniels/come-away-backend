@@ -3,23 +3,23 @@
   "$id": "http://example.com/example.json",
   "type": "object",
   "properties": {
-    "calViewsId": {
+    "viewType": {
       "type": "integer",
       "minimum": 0
     },
-    "businessBeginsHourId": {
+    "businessBeginsHour": {
       "type": "integer",
       "minimum": 0
     },
-    "businessEndsHourId": {
+    "businessEndsHour": {
       "type": "integer",
       "minimum": 0
     }
   },
   "additionalProperties": false,
   "required": [
-    "calViewsId",
-    "businessBeginsHourId",
-    "businessEndsHourId"
+    "viewType",
+    "businessBeginsHour",
+    "businessEndsHour"
   ]
 }

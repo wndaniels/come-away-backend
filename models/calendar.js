@@ -10,7 +10,7 @@ const {
 class Calendar {
   static async getAllCal() {
     const result = await db.query(
-      `SELECT cal_view_id AS "calViewId",
+      `SELECT view_type_id AS "viewTypeId",
               business_begins_hour_id AS "businessBeginsHourId",
               business_ends_hour_id AS "businessEndsHourId"
         FROM calendars`
@@ -28,7 +28,7 @@ class Calendar {
 
   static async getBeginHoursData() {
     const result = await db.query(
-      `SELECT id, business_begins_hour AS "businessBeginsHour"
+      `SELECT id, business_begins_hour AS "businessBeginsHour", hour_title AS "hourTitle"
       FROM begin_hours`
     );
     return result.rows;
@@ -36,7 +36,7 @@ class Calendar {
 
   static async getEndHoursData() {
     const result = await db.query(
-      `SELECT id, business_ends_hour AS "businessEndsHour"
+      `SELECT id, business_ends_hour AS "businessEndsHour", hour_title AS "hourTitle"
       FROM end_hours`
     );
     return result.rows;
@@ -46,12 +46,12 @@ class Calendar {
    */
   static async create(data) {
     const result = await db.query(
-      `INSERT INTO calendars (cal_view_id, business_begins_hour_id, business_ends_hour_id)
+      `INSERT INTO calendars (view_type_id, business_begins_hour_id, business_ends_hour_id)
             VALUES ($1, $2, $3)
-            RETURNING id, cal_view_id AS "calViewId",
+            RETURNING id, view_type_id AS "viewTypeId",
               business_begins_hour_id AS "businessBeginsHourId",
               business_ends_hour_id AS "businessEndsHourId"`,
-      [data.calViewsId, data.businessBeginsHourId, data.businessEndsHourId]
+      [data.viewType, data.businessBeginsHour, data.businessEndsHour]
     );
     let createdCal = result.rows[0];
 
