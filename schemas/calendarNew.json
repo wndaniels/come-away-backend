@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "properties": {
+    "calViewsId": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "businessBeginsHourId": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "businessEndsHourId": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "calViewsId",
+    "businessBeginsHourId",
+    "businessEndsHourId"
+  ]
+}

@@ -1,9 +1,64 @@
-INSERT INTO users (username, password, first_name, last_name, email) 
-VALUES  ('testuser',
-        'testpassword', 
-        'Test', 
-        'User', 
-        'testuser@comeawayapp.com');
+/* ####################################
+* 'testuser' and 'testadmin' passwords are 'testpassword'
+#################################### */
+
+INSERT INTO cal_views (view_type)
+VALUES  ('Day'),
+        ('Week'),
+        ('WorkWeek');
+
+INSERT INTO begin_hours (business_begins_hour)
+VALUES  ('0'),
+        ('1'),
+        ('2'),
+        ('3'),
+        ('4'),
+        ('5'),
+        ('6'),
+        ('7'),
+        ('8'),
+        ('9'),
+        ('10'),
+        ('11'),
+        ('12'),
+        ('13'),
+        ('14'),
+        ('15'),
+        ('16'),
+        ('17'),
+        ('18'),
+        ('19'),
+        ('20'),
+        ('21'),
+        ('22'),
+        ('23');
+
+INSERT INTO end_hours (business_ends_hour)
+VALUES  ('0'),
+        ('1'),
+        ('2'),
+        ('3'),
+        ('4'),
+        ('5'),
+        ('6'),
+        ('7'),
+        ('8'),
+        ('9'),
+        ('10'),
+        ('11'),
+        ('12'),
+        ('13'),
+        ('14'),
+        ('15'),
+        ('16'),
+        ('17'),
+        ('18'),
+        ('19'),
+        ('20'),
+        ('21'),
+        ('22'),
+        ('23');
+
 
 INSERT INTO days (day)
 VALUES  ('1'),
@@ -90,3 +145,23 @@ VALUES  ('2023'),
         ('2048'),
         ('2049'),
         ('2050');
+
+
+INSERT INTO calendars (cal_view_id, business_begins_hour_id, business_ends_hour_id)
+VALUES (1, 2, 23),(1,9,20);
+
+INSERT INTO users (username, password, first_name, last_name, email, is_admin, calendar_id) 
+VALUES  ('testuser',
+        '$2b$12$2jl0LrjhXmqZY/xqr7zExe49BNxhdE03c4eOvFaaHLJh7zP0Iyjwy', 
+        'Test', 
+        'User', 
+        'testuser@comeawayapp.com',
+        FALSE,
+        null),
+        ('testadmin',
+        '$2b$12$pASGK7CseJKX/VnR0XhTlui2/BIGSojRC0QEnUEwFhz8ria2wTK8m',
+        'Test',
+        'Admin',
+        'testadmin@comeawayapp.com',
+        TRUE,
+        1);
