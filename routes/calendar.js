@@ -11,6 +11,7 @@ const {
 const { BadRequestError } = require("../expressError");
 const Calendar = require("../models/calendar");
 const newCalendarSchema = require("../schemas/calendarNew.json");
+const updateCalendarSchema = require("../schemas/calendarUpdate.json");
 
 const router = express.Router();
 
@@ -50,18 +51,53 @@ router.get("/end-hours", async function (req, res, next) {
   }
 });
 
-router.post("/create", ensureLoggedIn, async function (req, res, next) {
-  try {
-    const validator = jsonschema.validate(req.body, newCalendarSchema);
-    if (!validator.valid) {
-      const errs = validator.errors.map((e) => e.stack);
-      throw new BadRequestError(errs);
+router.post(
+  "/:username/create",
+  ensureCorrectUserOrAdmin,
+  async function (req, res, next) {
+    try {
+      const validator = jsonschema.validate(req.body, newCalendarSchema);
+      if (!validator.valid) {
+        const errs = validator.errors.map((e) => e.stack);
+        throw new BadRequestError(errs);
+      }
+      const calendar = await Calendar.create(req.body);
+      return res.status(201).json({ calendar });
+    } catch (err) {
+      return next(err);
     }
-    const calendar = await Calendar.create(req.body);
-    return res.status(201).json({ calendar });
-  } catch (err) {
-    return next(err);
   }
-});
+);
+
+router.patch(
+  "/:username/edit",
+  ensureCorrectUserOrAdmin,
+  async function (req, res, next) {
+    try {
+      const validator = jsonschema.validate(req.body, updateCalendarSchema);
+      if (!validator.valid) {
+        const errs = validator.errors.map((e) => e.stack);
+        throw new BadRequestError(errs);
+      }
+      const updatedCalendar = await Calendar.update(req.body);
+      return res.status(201).json({ updatedCalendar });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
+
+router.delete(
+  "/:username/delete/:id",
+  ensureCorrectUserOrAdmin,
+  async function (req, res, next) {
+    try {
+      await Calendar.delete(req.params.id);
+      return res.json({ deleted: +req.params.id });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
 
 module.exports = router;

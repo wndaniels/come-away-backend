@@ -15,17 +15,12 @@
     "businessEndsHour": {
       "type": "integer",
       "minimum": 0
-    },
-    "userId":{
-      "type": "integer",
-      "minimum": 0
     }
   },
   "additionalProperties": false,
   "required": [
     "viewType",
     "businessBeginsHour",
-    "businessEndsHour",
-    "userId"
+    "businessEndsHour"
   ]
 }

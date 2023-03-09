@@ -1,12 +1,10 @@
 ﻿CREATE TABLE begin_hours (
-    id SERIAL PRIMARY KEY,
-    business_begins_hour TEXT NOT NULL,
+    business_begins_hour INTEGER PRIMARY KEY,
     hour_title TEXT NOT NULL
 );
 
 CREATE TABLE end_hours (
-    id SERIAL PRIMARY KEY,
-    business_ends_hour TEXT NOT NULL,
+    business_ends_hour INTEGER PRIMARY KEY,
     hour_title TEXT NOT NULL
 );
 
@@ -41,29 +39,8 @@ CREATE TABLE due_dates (
 );
 
 CREATE TABLE cal_views (
-    id SERIAL PRIMARY KEY,
-    view_type TEXT NOT NULL
-);
-
-CREATE TABLE calendars (
-    id SERIAL PRIMARY KEY,
-    view_type_id INTEGER
-        REFERENCES cal_views ON DELETE CASCADE,
-    business_begins_hour_id INTEGER
-        REFERENCES begin_hours ON DELETE CASCADE,
-    business_ends_hour_id INTEGER
-        REFERENCES end_hours ON DELETE CASCADE
-);
-
-CREATE TABLE appointments (
-    id SERIAL PRIMARY KEY,
-    description TEXT NOT NULL,
-    business_begins_hour_id INTEGER
-        REFERENCES begin_hours ON DELETE CASCADE,
-    business_ends_hour_id INTEGER
-        REFERENCES end_hours ON DELETE CASCADE,
-    calendar_id INTEGER
-        REFERENCES calendars ON DELETE CASCADE
+    id SERIAL,
+    view_title VARCHAR(25) PRIMARY KEY
 );
 
 CREATE TABLE users (
@@ -76,7 +53,28 @@ CREATE TABLE users (
         CHECK (position('@' IN email) > 1),
     is_admin BOOLEAN NOT NULL DEFAULT FALSE,
     due_date_id INTEGER 
-        REFERENCES due_dates ON DELETE CASCADE,
-    calendar_id INTEGER 
+        REFERENCES due_dates ON DELETE CASCADE
+);
+
+CREATE TABLE calendars (
+    id SERIAL PRIMARY KEY,
+    view_title VARCHAR(25)
+        REFERENCES cal_views ON DELETE CASCADE,
+    business_begins_hour_id INTEGER
+        REFERENCES begin_hours ON DELETE CASCADE,
+    business_ends_hour_id INTEGER
+        REFERENCES end_hours ON DELETE CASCADE,
+    user_id INTEGER
+        REFERENCES users ON DELETE CASCADE UNIQUE
+);
+
+CREATE TABLE visitors (
+    id SERIAL PRIMARY KEY,
+    description TEXT NOT NULL,
+    business_begins_hour_id INTEGER
+        REFERENCES begin_hours ON DELETE CASCADE,
+    business_ends_hour_id INTEGER
+        REFERENCES end_hours ON DELETE CASCADE,
+    calendar_id INTEGER
         REFERENCES calendars ON DELETE CASCADE
 );
