@@ -86,13 +86,10 @@ class User {
     const result = await db.query(
       `SELECT id,
               username,
-              first_name AS "firstName",
-              last_name AS "lastName",
-              email,
-              is_admin AS "isAdmin"
-        FROM users
-        ORDER BY username`
+              first_name AS "firstName"
+        FROM users`
     );
+
     return result.rows;
   }
 

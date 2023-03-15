@@ -70,10 +70,11 @@ CREATE TABLE calendars (
 
 CREATE TABLE visitors (
     id SERIAL PRIMARY KEY,
-    description TEXT NOT NULL,
-    business_begins_hour_id INTEGER
+    full_name TEXT NOT NULL,
+    note TEXT,
+    start_time INTEGER
         REFERENCES begin_hours ON DELETE CASCADE,
-    business_ends_hour_id INTEGER
+    end_time INTEGER
         REFERENCES end_hours ON DELETE CASCADE,
     calendar_id INTEGER
         REFERENCES calendars ON DELETE CASCADE

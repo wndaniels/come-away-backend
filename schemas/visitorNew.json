@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "properties": {
+    "fullName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "note": {
+      "type": "string",
+      "minLength": 0
+    },
+    "startTime": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "endTime": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "calendarId":{
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "fullName",
+    "note",
+    "startTime",
+    "endTime",
+    "calendarId"
+  ]
+}

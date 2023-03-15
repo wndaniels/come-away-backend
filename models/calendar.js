@@ -27,8 +27,9 @@ class Calendar {
    */
   static async getCalViewTypes() {
     const result = await db.query(
-      `SELECT id, view_title AS "viewType"
-        FROM cal_views AS "calViews"`
+      `SELECT id, 
+              view_title AS "viewType"
+      FROM cal_views AS "calViews"`
     );
     return result.rows;
   }
@@ -39,8 +40,9 @@ class Calendar {
    */
   static async getBeginHoursData() {
     const result = await db.query(
-      `SELECT business_begins_hour AS "businessBeginsHour", hour_title AS "hourTitle"
-      FROM begin_hours`
+      `SELECT business_begins_hour AS "businessBeginsHour", 
+              hour_title AS "hourTitle"
+        FROM begin_hours`
     );
     return result.rows;
   }
@@ -51,8 +53,9 @@ class Calendar {
    */
   static async getEndHoursData() {
     const result = await db.query(
-      `SELECT business_ends_hour AS "businessEndsHour", hour_title AS "hourTitle"
-      FROM end_hours`
+      `SELECT business_ends_hour AS "businessEndsHour", 
+              hour_title AS "hourTitle"
+        FROM end_hours`
     );
     return result.rows;
   }
@@ -61,12 +64,18 @@ class Calendar {
    */
   static async create(data) {
     const result = await db.query(
-      `INSERT INTO calendars (view_title, business_begins_hour_id, business_ends_hour_id, user_id)
+      `INSERT INTO calendars 
+                  (
+                    view_title, 
+                    business_begins_hour_id, 
+                    business_ends_hour_id, 
+                    user_id
+                  )
             VALUES ($1, $2, $3, $4)
             RETURNING view_title AS "viewType",
-              business_begins_hour_id AS "businessBeginsHour",
-              business_ends_hour_id AS "businessEndsHour",
-              user_id AS "userId"`,
+                      business_begins_hour_id AS "businessBeginsHour",
+                      business_ends_hour_id AS "businessEndsHour",
+                      user_id AS "userId"`,
       [
         data.viewType,
         data.businessBeginsHour,
@@ -96,10 +105,9 @@ class Calendar {
 
     const querySql = `UPDATE calendars
       SET ${setCols}
-      RETURNING 
-          view_title AS "viewType",
-          business_begins_hour_id AS "businessBeginsHour",
-          business_ends_hour_id AS "businessEndsHour"`;
+      RETURNING view_title AS "viewType",
+                business_begins_hour_id AS "businessBeginsHour",
+                business_ends_hour_id AS "businessEndsHour"`;
 
     const result = await db.query(querySql, [...values]);
     const calendar = result.rows[0];
@@ -114,9 +122,9 @@ class Calendar {
   static async delete(id) {
     const result = await db.query(
       `DELETE 
-      FROM calendars
-      WHERE id = $1
-      RETURNING id`,
+        FROM calendars
+        WHERE id = $1
+        RETURNING id`,
       [id]
     );
     const calendar = result.rows[0];
