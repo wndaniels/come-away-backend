@@ -28,15 +28,6 @@ CREATE TABLE years (
     year TEXT NOT NULL
 );
 
-CREATE TABLE due_dates (
-    id SERIAL PRIMARY KEY,
-    month_id INTEGER 
-        REFERENCES months ON DELETE CASCADE,
-    day_id INTEGER 
-        REFERENCES days ON DELETE CASCADE,
-    year_id INTEGER 
-        REFERENCES years ON DELETE CASCADE
-);
 
 CREATE TABLE cal_views (
     id SERIAL,
@@ -51,9 +42,19 @@ CREATE TABLE users (
     last_name TEXT NOT NULL,
     email TEXT NOT NULL
         CHECK (position('@' IN email) > 1),
-    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
-    due_date_id INTEGER 
-        REFERENCES due_dates ON DELETE CASCADE
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE due_dates (
+    id SERIAL PRIMARY KEY,
+    year_id INTEGER 
+        REFERENCES years ON DELETE CASCADE,
+    month_id INTEGER 
+        REFERENCES months ON DELETE CASCADE,
+    day_id INTEGER 
+        REFERENCES days ON DELETE CASCADE,
+    user_id INTEGER
+        REFERENCES users ON DELETE CASCADE
 );
 
 CREATE TABLE calendars (

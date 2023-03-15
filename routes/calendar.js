@@ -44,8 +44,8 @@ router.get("/begin-hours", async function (req, res, next) {
 
 router.get("/end-hours", async function (req, res, next) {
   try {
-    const endtHoursData = await Calendar.getEndHoursData();
-    return res.json(endtHoursData);
+    const endHoursData = await Calendar.getEndHoursData();
+    return res.json(endHoursData);
   } catch (err) {
     return next(err);
   }

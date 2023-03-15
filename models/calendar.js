@@ -59,6 +59,59 @@ class Calendar {
     );
     return result.rows;
   }
+
+  /**
+   * Get days data
+   * e.g. '1', '2', '3',...,'30'
+   */
+  static async getDaysData() {
+    const result = await db.query(
+      `SELECT id,
+              day
+        FROM days`
+    );
+    return result.rows;
+  }
+
+  /**
+   * Get daysOfWeek data
+   * e.g. 'Monday', 'Tuesday', 'Wednesday', etc...
+   */
+  static async getDaysOfWeekData() {
+    const result = await db.query(
+      `SELECT id,
+              day_of_week AS "dayOfWeek
+        FROM days_of_week`
+    );
+    return result.rows;
+  }
+
+  /**
+   * Get months data
+   * e.g. 'January', 'February', 'March', etc...
+   */
+  static async getMonthsData() {
+    const result = await db.query(
+      `SELECT id,
+              month
+        FROM months`
+    );
+    return result.rows;
+  }
+
+  /**
+   * Get years data
+   * e.g. '2023', '2024', '2025', etc...
+   */
+  static async getYearsData() {
+    const result = await db.query(
+      `SELECT id,
+              year
+        FROM years`
+    );
+    return result.rows;
+  }
+
   /**
    * User is able to create calendar
    */

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "properties": {
+    "yearId": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "monthId": {
+      "type": "integer",
+      "minLength": 0
+    },
+     "dayId": {
+      "type": "integer",
+      "minLength": 0
+    },
+    "userId":{
+      "type": "integer",
+      "minLength": 0
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "yearId",
+    "monthId",
+    "dayId",
+    "userId"
+  ]
+}

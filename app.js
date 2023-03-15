@@ -11,6 +11,7 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
 const calendarRoutes = require("./routes/calendar");
 const visitorRoutes = require("./routes/visitors");
+const dueDateRoutes = require("./routes/dueDate");
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/calendar", calendarRoutes);
 app.use("/visitors", visitorRoutes);
+app.use("/due-date", dueDateRoutes);
 
 /** Handle 404 errors */
 app.use(function (req, res, next) {
