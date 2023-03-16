@@ -47,6 +47,7 @@ CREATE TABLE users (
 
 CREATE TABLE due_dates (
     id SERIAL PRIMARY KEY,
+    baby_name TEXT,
     year_id INTEGER 
         REFERENCES years ON DELETE CASCADE,
     month_id INTEGER 
@@ -54,7 +55,7 @@ CREATE TABLE due_dates (
     day_id INTEGER 
         REFERENCES days ON DELETE CASCADE,
     user_id INTEGER
-        REFERENCES users ON DELETE CASCADE
+        REFERENCES users ON DELETE CASCADE UNIQUE
 );
 
 CREATE TABLE calendars (

@@ -9,6 +9,9 @@ const {
 } = require("../expressError");
 
 class Calendar {
+  /**
+   * Get all calendars
+   */
   static async getAllCal() {
     const result = await db.query(
       `SELECT id,
@@ -124,11 +127,11 @@ class Calendar {
                     business_ends_hour_id, 
                     user_id
                   )
-            VALUES ($1, $2, $3, $4)
-            RETURNING view_title AS "viewType",
-                      business_begins_hour_id AS "businessBeginsHour",
-                      business_ends_hour_id AS "businessEndsHour",
-                      user_id AS "userId"`,
+        VALUES ($1, $2, $3, $4)
+        RETURNING view_title AS "viewType",
+                  business_begins_hour_id AS "businessBeginsHour",
+                  business_ends_hour_id AS "businessEndsHour",
+                  user_id AS "userId"`,
       [
         data.viewType,
         data.businessBeginsHour,

@@ -16,6 +16,7 @@ class DueDate {
   static async getAllDueDates() {
     const result = await db.query(
       `SELECT id,
+              baby_name AS "babyName",
               year_id AS "yearId",
               month_id AS "month_id",
               day_id AS "dayId",
@@ -71,18 +72,20 @@ class DueDate {
     const result = await db.query(
       `INSERT INTO due_dates
                   (
+                    baby_name,
                     year_id,
                     month_id,
                     day_id,
                     user_id
                   )
-        VALUES ($1, $2, $3, $4)
+        VALUES ($1, $2, $3, $4, $5)
         RETURNING id,
+                  baby_name AS "babyName",
                   year_id AS "yearId",
                   month_id AS "monthId",
                   day_id AS "dayId",
                   user_id AS "userId"`,
-      [data.year, data.month, data.day, data.userId]
+      [data.babyName, data.yearId, data.monthId, data.dayId, data.userId]
     );
     let createdDueDate = result.rows[0];
     return createdDueDate;

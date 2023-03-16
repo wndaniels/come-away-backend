@@ -52,7 +52,7 @@ router.get("/", async function (req, res, next) {
 });
 
 router.post(
-  "/create",
+  "/:username/create",
   ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {

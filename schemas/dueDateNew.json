@@ -3,6 +3,10 @@
   "$id": "http://example.com/example.json",
   "type": "object",
   "properties": {
+    "babyName": {
+      "type": "string",
+      "minimum": 0
+    },
     "yearId": {
       "type": "integer",
       "minimum": 0
