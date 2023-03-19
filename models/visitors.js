@@ -34,7 +34,8 @@ class Visitor {
             VALUES ($1, $2, $3, $4, $5)
             RETURNING id,
                       full_name AS "fullName",
-                      note, start_time AS "startTime",
+                      note,
+                      start_time AS "startTime",
                       end_time AS "endTime",
                       calendar_id AS "calendarId"`,
       [data.fullName, data.note, data.startTime, data.endTime, data.calendarId]
@@ -45,16 +46,12 @@ class Visitor {
     return createdVisitor;
   }
 
-  static async get(id) {
+  static async delete(id) {
     const result = await db.query(
-      `SELECT id, 
-              full_name, 
-              note, 
-              start_time, 
-              end_time, 
-              calendar_id
+      `DELETE 
         FROM visitors
-        WHERE id = $1`,
+        WHERE id = $1
+        RETURNING id`,
       [id]
     );
     let visitor = result.rows[0];

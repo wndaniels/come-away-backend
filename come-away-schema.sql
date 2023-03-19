@@ -1,11 +1,13 @@
 ﻿CREATE TABLE begin_hours (
     business_begins_hour INTEGER PRIMARY KEY,
-    hour_title TEXT NOT NULL
+    hour_title TEXT NOT NULL,
+    iso_time TEXT NOT NULL
 );
 
 CREATE TABLE end_hours (
     business_ends_hour INTEGER PRIMARY KEY,
-    hour_title TEXT NOT NULL
+    hour_title TEXT NOT NULL,
+    iso_time TEXT NOT NULL
 );
 
 CREATE TABLE days (
@@ -74,10 +76,8 @@ CREATE TABLE visitors (
     id SERIAL PRIMARY KEY,
     full_name TEXT NOT NULL,
     note TEXT,
-    start_time INTEGER
-        REFERENCES begin_hours ON DELETE CASCADE,
-    end_time INTEGER
-        REFERENCES end_hours ON DELETE CASCADE,
+    start_time TEXT NOT NULL,
+    end_time TEXT NOT NULL,
     calendar_id INTEGER
         REFERENCES calendars ON DELETE CASCADE
 );

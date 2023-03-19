@@ -11,6 +11,7 @@ const {
 const { BadRequestError } = require("../expressError");
 const Calendar = require("../models/calendar");
 const newDueDateSchema = require("../schemas/dueDateNew.json");
+const updateDueDateSchema = require("../schemas/dueDateUpdate.json");
 const DueDate = require("../models/dueDate");
 
 const router = express.Router();
@@ -63,6 +64,37 @@ router.post(
       }
       const dueDate = await DueDate.create(req.body);
       return res.status(201).json({ dueDate });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
+
+router.patch(
+  "/:id/:username/edit",
+  ensureCorrectUserOrAdmin,
+  async function (req, res, next) {
+    try {
+      const validator = jsonschema.validate(req.body, updateDueDateSchema);
+      if (!validator.valid) {
+        const errs = validator.errors.map((e) => e.stick);
+        throw new BadRequestError(errs);
+      }
+      const updateDueDate = await DueDate.update(req.params.id, req.body);
+      return res.status(201).json({ updateDueDate });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
+
+router.delete(
+  "/:id/:username/delete",
+  ensureCorrectUserOrAdmin,
+  async function (req, res, next) {
+    try {
+      await DueDate.delete(req.params.id);
+      return res.json({ delete: +req.params.id });
     } catch (err) {
       return next(err);
     }

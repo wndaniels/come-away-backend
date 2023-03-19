@@ -44,7 +44,8 @@ class Calendar {
   static async getBeginHoursData() {
     const result = await db.query(
       `SELECT business_begins_hour AS "businessBeginsHour", 
-              hour_title AS "hourTitle"
+              hour_title AS "hourTitle",
+              iso_time AS "isoTime"
         FROM begin_hours`
     );
     return result.rows;
@@ -57,7 +58,8 @@ class Calendar {
   static async getEndHoursData() {
     const result = await db.query(
       `SELECT business_ends_hour AS "businessEndsHour", 
-              hour_title AS "hourTitle"
+              hour_title AS "hourTitle",
+              iso_time AS "isoTime"
         FROM end_hours`
     );
     return result.rows;
@@ -152,20 +154,23 @@ class Calendar {
   //   const result = await db.query();
   // }
 
-  static async update(data) {
+  static async update(id, data) {
     const { setCols, values } = sqlForPartialUpdate(data, {
       viewType: "view_title",
       businessBeginsHour: "business_begins_hour_id",
       businessEndsHour: "business_ends_hour_id",
     });
 
+    const idVarIdx = "$" + (values.length + 1);
+
     const querySql = `UPDATE calendars
       SET ${setCols}
+      WHERE id = ${idVarIdx} 
       RETURNING view_title AS "viewType",
                 business_begins_hour_id AS "businessBeginsHour",
                 business_ends_hour_id AS "businessEndsHour"`;
 
-    const result = await db.query(querySql, [...values]);
+    const result = await db.query(querySql, [...values, id]);
     const calendar = result.rows[0];
 
     return calendar;

@@ -3,22 +3,27 @@
   "$id": "http://example.com/example.json",
   "type": "object",
   "properties": {
-    "viewType": {
+    "babyName": {
       "type": "string",
-      "minLength": 1,
-      "maxLength": 10
+      "minimum": 0
     },
-    "businessBeginsHour": {
+    "yearId": {
       "type": "integer",
       "minimum": 0
     },
-    "businessEndsHour": {
+    "monthId": {
       "type": "integer",
-      "minimum": 0
+      "minLength": 0
+    },
+     "dayId": {
+      "type": "integer",
+      "minLength": 0
     }
   },
   "additionalProperties": false,
   "required": [
-    
+    "yearId",
+    "monthId",
+    "dayId"
   ]
 }

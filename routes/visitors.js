@@ -3,6 +3,11 @@
 const jsonschema = require("jsonschema");
 const express = require("express");
 
+const {
+  ensureCorrectUserOrAdmin,
+  ensureAdmin,
+  ensureLoggedIn,
+} = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const Visitor = require("../models/visitors");
 const newVisitorSchema = require("../schemas/visitorNew.json");
@@ -45,5 +50,18 @@ router.patch("/update", async function (req, res, next) {
     return next(err);
   }
 });
+
+router.delete(
+  "/:id/:username/delete",
+  ensureCorrectUserOrAdmin,
+  async function (req, res, next) {
+    try {
+      await Visitor.delete(req.params.id);
+      return res.json({ deleted: +req.params.id });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
 
 module.exports = router;

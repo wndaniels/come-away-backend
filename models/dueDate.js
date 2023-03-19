@@ -18,7 +18,7 @@ class DueDate {
       `SELECT id,
               baby_name AS "babyName",
               year_id AS "yearId",
-              month_id AS "month_id",
+              month_id AS "monthId",
               day_id AS "dayId",
               user_id AS "userId"
         FROM due_dates`
@@ -89,6 +89,43 @@ class DueDate {
     );
     let createdDueDate = result.rows[0];
     return createdDueDate;
+  }
+
+  static async update(id, data) {
+    const { setCols, values } = sqlForPartialUpdate(data, {
+      babyName: "baby_name",
+      yearId: "year_id",
+      monthId: "month_id",
+      dayId: "day_id",
+    });
+
+    const idVarIdx = "$" + (values.length + 1);
+
+    const querySql = `UPDATE due_dates
+        SET ${setCols}
+        WHERE id = ${idVarIdx}
+        RETURNING baby_name AS "babyName",
+                  year_id AS "yearId",
+                  month_id AS "monthId",
+                  day_id AS "dayId"`;
+
+    const result = await db.query(querySql, [...values, id]);
+    const dueDate = result.rows[0];
+
+    return dueDate;
+  }
+
+  static async delete(id) {
+    const result = await db.query(
+      `DELETE
+        FROM due_dates
+        WHERE id = $1
+        RETURNING id`,
+      [id]
+    );
+    const dueDate = result.rows[0];
+
+    if (!dueDate) throw new NotFoundError("Due date has not been set");
   }
 }
 

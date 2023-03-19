@@ -70,7 +70,7 @@ router.post(
 );
 
 router.patch(
-  "/:username/edit",
+  "/:id/:username/edit",
   ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
@@ -79,7 +79,7 @@ router.patch(
         const errs = validator.errors.map((e) => e.stack);
         throw new BadRequestError(errs);
       }
-      const updatedCalendar = await Calendar.update(req.body);
+      const updatedCalendar = await Calendar.update(req.params.id, req.body);
       return res.status(201).json({ updatedCalendar });
     } catch (err) {
       return next(err);
@@ -88,7 +88,7 @@ router.patch(
 );
 
 router.delete(
-  "/:username/delete/:id",
+  "/:id/:username/delete",
   ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
