@@ -37,20 +37,6 @@ router.post("/add", async function (req, res, next) {
   }
 });
 
-router.patch("/update", async function (req, res, next) {
-  try {
-    const validator = jsonschema.validate(req.body, updateVistorSchema);
-    if (!validator.valid) {
-      const errs = validator.errors.map((e) => e.stack);
-      throw new BadRequestError(errs);
-    }
-    const updatedVisit = await Visitor.update(req.body);
-    return res.status(201).json({ updatedVisit });
-  } catch (err) {
-    return next(err);
-  }
-});
-
 router.delete(
   "/:id/:username/delete",
   ensureCorrectUserOrAdmin,

@@ -2,10 +2,6 @@
 * 'testuser' and 'testadmin' passwords are 'testpassword'
 #################################### */
 
-INSERT INTO cal_views (view_title)
-VALUES  ('Day'),
-        ('Week');
-
 INSERT INTO begin_hours (business_begins_hour, hour_title, iso_time)
 VALUES  ('0', '12:00 AM', '00:00:00'),
         ('1', '1:00 AM', '01:00:00'),
@@ -160,8 +156,8 @@ VALUES  ('testuser',
         'testadmin@comeawayapp.com',
         TRUE);
 
-INSERT INTO calendars (view_title, business_begins_hour_id, business_ends_hour_id, user_id)
-VALUES ('Week', 5, 23, 2),('Week',9,20, 1);
+INSERT INTO calendars (business_begins_hour_id, business_ends_hour_id, user_id)
+VALUES (5, 23, 2),(9,20, 1);
 
 INSERT INTO due_dates (baby_name, year_id, month_id, day_id, user_id)
 VALUES ('Elijah Rye Daniels', 1, 12, 6, 2), ('Everly Grace Daniels', 2, 8, 24, 1);

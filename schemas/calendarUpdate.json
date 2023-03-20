@@ -3,11 +3,6 @@
   "$id": "http://example.com/example.json",
   "type": "object",
   "properties": {
-    "viewType": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 10
-    },
     "businessBeginsHour": {
       "type": "integer",
       "minimum": 0

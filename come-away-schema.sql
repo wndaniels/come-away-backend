@@ -31,10 +31,6 @@ CREATE TABLE years (
 );
 
 
-CREATE TABLE cal_views (
-    id SERIAL,
-    view_title VARCHAR(25) PRIMARY KEY
-);
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -62,8 +58,6 @@ CREATE TABLE due_dates (
 
 CREATE TABLE calendars (
     id SERIAL PRIMARY KEY,
-    view_title VARCHAR(25)
-        REFERENCES cal_views ON DELETE CASCADE,
     business_begins_hour_id INTEGER
         REFERENCES begin_hours ON DELETE CASCADE,
     business_ends_hour_id INTEGER

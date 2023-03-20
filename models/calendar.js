@@ -15,24 +15,10 @@ class Calendar {
   static async getAllCal() {
     const result = await db.query(
       `SELECT id,
-              view_title AS "viewType",
               business_begins_hour_id AS "businessBeginsHour",
               business_ends_hour_id AS "businessEndsHour",
               user_id AS "userId"
         FROM calendars`
-    );
-    return result.rows;
-  }
-
-  /**
-   * Get viewType data
-   * e.g. 'Day', 'Week'
-   */
-  static async getCalViewTypes() {
-    const result = await db.query(
-      `SELECT id, 
-              view_title AS "viewType"
-      FROM cal_views AS "calViews"`
     );
     return result.rows;
   }
@@ -79,19 +65,6 @@ class Calendar {
   }
 
   /**
-   * Get daysOfWeek data
-   * e.g. 'Monday', 'Tuesday', 'Wednesday', etc...
-   */
-  static async getDaysOfWeekData() {
-    const result = await db.query(
-      `SELECT id,
-              day_of_week AS "dayOfWeek
-        FROM days_of_week`
-    );
-    return result.rows;
-  }
-
-  /**
    * Get months data
    * e.g. 'January', 'February', 'March', etc...
    */
@@ -124,22 +97,15 @@ class Calendar {
     const result = await db.query(
       `INSERT INTO calendars 
                   (
-                    view_title, 
                     business_begins_hour_id, 
                     business_ends_hour_id, 
                     user_id
                   )
-        VALUES ($1, $2, $3, $4)
-        RETURNING view_title AS "viewType",
-                  business_begins_hour_id AS "businessBeginsHour",
+        VALUES ($1, $2, $3)
+        RETURNING business_begins_hour_id AS "businessBeginsHour",
                   business_ends_hour_id AS "businessEndsHour",
                   user_id AS "userId"`,
-      [
-        data.viewType,
-        data.businessBeginsHour,
-        data.businessEndsHour,
-        data.userId,
-      ]
+      [data.businessBeginsHour, data.businessEndsHour, data.userId]
     );
 
     let createdCal = result.rows[0];
@@ -156,7 +122,6 @@ class Calendar {
 
   static async update(id, data) {
     const { setCols, values } = sqlForPartialUpdate(data, {
-      viewType: "view_title",
       businessBeginsHour: "business_begins_hour_id",
       businessEndsHour: "business_ends_hour_id",
     });
@@ -166,8 +131,7 @@ class Calendar {
     const querySql = `UPDATE calendars
       SET ${setCols}
       WHERE id = ${idVarIdx} 
-      RETURNING view_title AS "viewType",
-                business_begins_hour_id AS "businessBeginsHour",
+      RETURNING business_begins_hour_id AS "businessBeginsHour",
                 business_ends_hour_id AS "businessEndsHour"`;
 
     const result = await db.query(querySql, [...values, id]);
